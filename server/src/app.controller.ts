@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service';
-import { LoginDataDto } from './login-data.dto';
 import { AuthService } from './auth/auth.service';
 import { validateSync, ValidationError } from 'class-validator';
 
