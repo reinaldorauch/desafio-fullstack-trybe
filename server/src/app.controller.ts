@@ -1,12 +1,15 @@
 import {
-  Controller,
   Get,
   Body,
   Post,
-  ValidationPipe,
+  Request,
+  UseGuards,
   UsePipes,
+  Controller,
+  ValidationPipe,
   BadRequestException,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service';
 import { LoginDataDto } from './login-data.dto';
 import { AuthService } from './auth/auth.service';
@@ -24,16 +27,9 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @UseGuards(AuthGuard('local'))
   @Post('login')
-  @UsePipes(
-    new ValidationPipe({
-      exceptionFactory: () =>
-        // Função roda quando o payload é inválido. Funciona pra retornar o objeto
-        // correto para a api
-        new BadRequestException({ message: 'Campos inválidos' }),
-    }),
-  )
-  login(@Body() data: LoginDataDto) {
-    return this.authService.login(data);
+  login(@Request() req) {
+    return req.user;
   }
 }
