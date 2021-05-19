@@ -6,9 +6,10 @@ import { LoginDataDto } from './login-data.dto';
 import { NotFoundExceptionFilter } from './not-found-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
-  app.useGlobalFilters(new NotFoundExceptionFilter());
-  await app.listen(3000);
+	const app = await NestFactory.create(AppModule);
+	app.setGlobalPrefix('api');
+	app.useGlobalFilters(new NotFoundExceptionFilter());
+	app.enableCors();
+	await app.listen(3000);
 }
 bootstrap();
