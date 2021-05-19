@@ -1,4 +1,4 @@
-import { Strategy } from 'passport-local-token';
+import { Strategy } from 'passport-http-header-strategy';
 import { PassportStrategy } from '@nestjs/passport';
 import {
 	Injectable,
@@ -10,7 +10,7 @@ import { LoginDataDto } from '../login-data.dto';
 import { validateSync } from 'class-validator';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class BearerStrategy extends PassportStrategy(Strategy) {
 	constructor(private authService: AuthService) {
 		super();
 	}

@@ -7,7 +7,9 @@ import {
 	Body,
 	Post,
 	BadRequestException,
+	UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CryptoService, Coin } from './crypto.service';
 import { CoinQueryParams } from './coin-query-params';
 import { UpdateExchangeTableDto } from './update-exchange-table.dto';
@@ -20,6 +22,7 @@ const messageMap = {
 };
 
 @Controller('crypto')
+@UseGuards(AuthGuard('header'))
 export class CryptoController {
 	constructor(private cryptoService: CryptoService) {}
 
