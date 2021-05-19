@@ -1,0 +1,49 @@
+<mat-toolbar
+	color="primary"
+	class="mat-elevation-z6"
+	style="display: flex; justify-content: space-between;"
+>
+	<span>Coiner</span>
+	<a mat-raised-button routerLink="">
+		Voltar
+	</a>
+</mat-toolbar>
+<mat-sidenav-container>
+	<mat-sidenav>Start</mat-sidenav>
+	<mat-sidenav position="end">End</mat-sidenav>
+	<section
+		style="display: flex; justify-content: center;"
+		class="mat-elevation-z3"
+	>
+		<mat-card style="width: 25%; min-height: 200px; margin: 10px">
+			<form [formGroup]="form" (ngSubmit)="update()">
+				<mat-card-title>Atualizar cotações</mat-card-title>
+				<mat-card-content>
+					<p>
+						<mat-form-field>
+							<mat-label>Moeda</mat-label>
+							<mat-select formControlName="currency">
+								<mat-option value="BRL">BRL</mat-option>
+								<mat-option value="EUR">EUR</mat-option>
+								<mat-option value="CAD">CAD</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</p>
+					<p>
+						<mat-form-field>
+							<input
+								matInput
+								type="number"
+								placeholder="Valor"
+								formControlName="value"
+							/>
+						</mat-form-field>
+					</p>
+					<p>
+						<button mat-raised-button>Atualizar</button>
+					</p>
+				</mat-card-content>
+			</form>
+		</mat-card>
+	</section>
+</mat-sidenav-container>
