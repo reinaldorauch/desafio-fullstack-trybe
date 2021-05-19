@@ -16,7 +16,9 @@ export class AuthService {
 		// de letras e números
 		await this.repo.save(tokenData);
 
-		return tokenData;
+		const { token } = tokenData;
+
+		return { token };
 	}
 
 	async validateSession(token: string) {
