@@ -34,8 +34,8 @@ export class UpdateRatesComponent implements OnInit {
 		}
 
 		try {
-			await this.ratesService.update(this.form.value).toPromise();
-			this.snackBar.open('Cotação da moeda atualizada com sucesso!');
+			const { message } = await this.ratesService.updateRates(this.form.value).toPromise();
+			this.snackBar.open(message);
 			await this.router.navigate([""]);
 		} catch (err) {
 			this.snackBar.open('Erro ao atualizar a cotação da moeda: ' + (err?.error?.message || err.message));

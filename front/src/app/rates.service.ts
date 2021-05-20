@@ -4,6 +4,8 @@ import { BehaviorSubject } from "rxjs";
 import { filter } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { LocalStorageService } from "./local-storage.service";
+import { ResultDto } from "src/types/result.dto";
+import { UpdateRatesDto } from "src/types/update-rates.dto";
 
 interface RatesDataStore {
 	data: any;
@@ -39,17 +41,31 @@ export class RatesService {
 	) {}
 
 	init() {
+		const Authorization = this.localStorageService.getToken();
+		if (!Authorization) {
+			throw new Error("Not logged in");
+		}
 		this.setLoading();
 		this.httpClient
 			.get<any>(environment.apiUrl + "/crypto/btc", {
-				headers: {
-					Authorization: this.localStorageService.getToken() || "",
-				},
+				headers: { Authorization },
 			})
 			.subscribe((data) => {
 				this.dataStore.data = data;
 				this.setLoading(false);
 			});
+	}
+
+	updateRates(dto: UpdateRatesDto) {
+		const Authorization = this.localStorageService.getToken();
+		if (!Authorization) {
+			throw new Error("Not logged in");
+		}
+		return this.httpClient.post<ResultDto>(
+			environment.apiUrl + "/crypto/btc",
+			dto,
+			{ headers: { Authorization } }
+		);
 	}
 
 	private setLoading(v = true) {
