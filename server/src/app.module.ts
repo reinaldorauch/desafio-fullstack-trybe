@@ -9,11 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     CryptoModule,
     AuthModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      database: 'coiner',
-      password: 'coiner_db',
-      username: 'coiner_user',
+      type: 'sqlite',
+      database: 'coiner.db',
       entities: [__dirname + '/../**/*.entity.js'],
     }),
   ],
