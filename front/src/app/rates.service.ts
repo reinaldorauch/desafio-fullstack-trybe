@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { filter } from "rxjs/operators";
@@ -37,7 +38,8 @@ export class RatesService {
 
 	constructor(
 		private httpClient: HttpClient,
-		private localStorageService: LocalStorageService
+		private localStorageService: LocalStorageService,
+		private router: Router
 	) {}
 
 	init() {
@@ -50,10 +52,18 @@ export class RatesService {
 			.get<any>(environment.apiUrl + "/crypto/btc", {
 				headers: { Authorization },
 			})
-			.subscribe((data) => {
-				this.dataStore.data = data;
-				this.setLoading(false);
-			});
+			.subscribe(
+				(data) => {
+					this.dataStore.data = data;
+					this.setLoading(false);
+				},
+				(err) => {
+					// Se não for autorizado, redireciona o usuário para o login
+					if (err.status === 401) {
+						this.router.navigate(["/login"]);
+					}
+				}
+			);
 	}
 
 	updateRates(dto: UpdateRatesDto) {

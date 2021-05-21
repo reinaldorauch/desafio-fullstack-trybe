@@ -11,10 +11,14 @@ import { RatesService } from "../rates.service";
 	styleUrls: ["./update-rates.component.css"],
 })
 export class UpdateRatesComponent implements OnInit {
+	$loading = this.ratesService.loading;
+
 	form = this.formBuilder.group({
 		currency: null,
 		value: null,
 	});
+
+	data: any = null;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -23,7 +27,18 @@ export class UpdateRatesComponent implements OnInit {
 		private router: Router
 	) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.ratesService.data
+		.subscribe(data => {
+			this.data = data;
+		});
+
+		this.form.get('currency')?.valueChanges.subscribe(currency => {
+			this.form.patchValue({value: this.data.bpi[currency].rate_float});
+		});
+
+		this.ratesService.init();
+	}
 
 	async update() {
 		const { invalid, touched, dirty } = this.form;
@@ -38,7 +53,13 @@ export class UpdateRatesComponent implements OnInit {
 			this.snackBar.open(message);
 			await this.router.navigate([""]);
 		} catch (err) {
-			this.snackBar.open('Erro ao atualizar a cotação da moeda: ' + (err?.error?.message || err.message));
+			if (err.status === 401) {
+				// Se não for autorizado, redireciona o usuário para o login
+				this.router.navigate(["/login"]);
+				this.snackBar.open('Não foi possível atualizar: não está logado');
+			} else {
+				this.snackBar.open('Erro ao atualizar a cotação da moeda: ' + (err?.error?.message || err.message));
+			}
 		}
 	}
 }
