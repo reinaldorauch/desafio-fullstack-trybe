@@ -1,0 +1,53 @@
+<mat-toolbar
+	color="primary"
+	class="mat-elevation-z6"
+	style="display: flex; justify-content: space-between;"
+>
+	<span>Coiner</span>
+	<a mat-raised-button routerLink="update-rates">
+		Atualizar valor monetário
+	</a>
+</mat-toolbar>
+<mat-sidenav-container>
+	<mat-sidenav>Start</mat-sidenav>
+	<mat-sidenav position="end">End</mat-sidenav>
+	<section
+		style="display: flex; justify-content: center;"
+		class="mat-elevation-z3"
+	>
+		<p style="margin-top: 50px" *ngIf="$loading | async">Carregando...</p>
+		<mat-card
+			*ngIf="$data | async; let d"
+			style="width: 25%; min-height: 200px; margin: 10px"
+		>
+			<form [formGroup]="form">
+				<mat-card-title style="display: flex; justify-content: space-between;">
+					<mat-form-field>
+						<input
+							matInput
+							type="number"
+							placeholder="BTC"
+							value="1"
+							min="1"
+							formControlName="BTC"
+						/>
+					</mat-form-field>
+				</mat-card-title>
+				<mat-card-content style="display: flex; flex-wrap: wrap;">
+					<mat-form-field
+						*ngFor="let c of exchanges(d.bpi)"
+						style="margin: 5px"
+					>
+						<input
+							matInput
+							type="number"
+							readonly
+							[placeholder]="c.code"
+							[formControlName]="c.code"
+						/>
+					</mat-form-field>
+				</mat-card-content>
+			</form>
+		</mat-card>
+	</section>
+</mat-sidenav-container>

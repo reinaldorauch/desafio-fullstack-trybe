@@ -1,0 +1,10 @@
+[{
+  "name": "default",
+  "type": "sqlite",
+  "database": "coiner.db",
+  "entities": ["./src/**/*.entity.{ts,js}"],
+  "migrations": ["./src/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/migrations"
+  }
+}]
