@@ -69,6 +69,10 @@ export class CryptoService {
     this.usdExchangeTable[data.currency] = data.value.toString();
     this.saveExchangeTable();
   }
+
+  get exchangeTable() {
+    return this.usdExchangeTable;
+  }
 }
 
 // Helper pra instanciar os bigdecimals
