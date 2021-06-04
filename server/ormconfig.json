@@ -2,8 +2,8 @@
   "name": "default",
   "type": "sqlite",
   "database": "coiner.db",
-  "entities": ["./src/**/*.entity.{ts,js}"],
-  "migrations": ["./src/migrations/*.ts"],
+  "entities": ["./dist/**/*.entity.js"],
+  "migrations": ["./dist/migrations/*.js"],
   "cli": {
     "migrationsDir": "./src/migrations"
   }
