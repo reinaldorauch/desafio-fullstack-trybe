@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'coiner.db',
-      entities: [__dirname + '/../**/*.entity.js'],
+      entities: ['dist/**/*.entity.js'],
     }),
   ],
   controllers: [AppController],
